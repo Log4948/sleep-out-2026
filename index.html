@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleep Out 2026 · Accenture × Covenant House</title>
+<meta name="description" content="November 19 at Soldier Field. Accenture colleagues are giving up their beds for one night to support Covenant House and young people facing homelessness.">
+<meta name="theme-color" content="#0B0B11">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sleep Out 2026 · Accenture × Covenant House">
+<meta property="og:description" content="One night outside. A lasting impact. November 19 at Soldier Field, Chicago.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23A100FF'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ================= NAVIGATION ================= -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__mark" aria-hidden="true"></span>
+    <span>Accenture × Covenant House</span>
+  </a>
+
+  <nav class="nav__links" aria-label="Sections">
+    <a href="#why">Why we sleep out</a>
+    <a href="#act">Take part</a>
+    <a href="#expect">What to expect</a>
+    <a href="#faq">Questions</a>
+  </nav>
+
+  <a class="nav__cta" data-link="REGISTRATION" href="#">Join the Sleep Out</a>
+  <div class="nav__progress" id="navProgress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO — Soldier Field at night ================= -->
+  <section class="hero" id="top">
+    <div class="hero__sky" aria-hidden="true"></div>
+    <div class="hero__lights" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <canvas class="hero__stars" id="stars" aria-hidden="true"></canvas>
+
+    <!-- Chicago skyline silhouette along the horizon -->
+    <svg class="hero__skyline" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+      <polygon points="0,220 0,185 35,185 35,160 70,160 70,195 105,195 105,140 135,140 135,125 175,125 175,165 205,165 205,110 240,110 240,90 270,90 270,150 310,150 310,175 350,175 350,130 385,130 385,100 420,100 420,145 455,145 455,170 495,170 495,120 530,120 530,60 545,60 545,20 552,20 552,60 560,60 560,45 600,45 600,60 608,60 608,20 615,20 615,60 630,60 630,120 665,120 665,155 700,155 700,105 735,105 735,135 770,135 770,90 805,90 805,115 840,115 840,70 860,70 860,35 866,35 866,70 880,70 880,35 886,35 886,70 905,70 905,125 940,125 940,160 975,160 975,115 1010,115 1010,145 1045,145 1045,95 1080,95 1080,130 1115,130 1115,165 1150,165 1150,120 1185,120 1185,155 1220,155 1220,105 1255,105 1255,140 1290,140 1290,175 1325,175 1325,130 1360,130 1360,160 1400,160 1400,185 1440,185 1440,220"/>
+    </svg>
+
+    <div class="hero__grain" aria-hidden="true"></div>
+
+    <div class="hero__inner">
+      <p class="hero__eyebrow">
+        <span>Accenture</span>
+        <span class="divider" aria-hidden="true"></span>
+        <span>Covenant House</span>
+        <span class="divider" aria-hidden="true"></span>
+        <span class="year">Sleep Out 2026</span>
+      </p>
+
+      <h1 class="hero__headline" id="heroHeadline"></h1>
+
+      <!-- Venue band: the flagship site, in Chicago flag blue -->
+      <div class="venue" id="venue"></div>
+
+      <div class="hero__body">
+        <div>
+          <p class="hero__lede" id="heroLede"></p>
+          <div class="btn-row">
+            <a class="btn btn--light" data-link="REGISTRATION" href="#">
+              <span id="heroCta1">Join the Sleep Out</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="btn btn--ghost-light" data-link="DONATE" href="#">
+              <span id="heroCta2">Donate</span>
+            </a>
+          </div>
+          <a class="hero__scroll" href="#why">
+            <span id="heroScroll">Learn why we sleep out</span>
+            <span class="chev" aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="hero__goal">
+          <span class="hero__goal-value" id="heroGoal" data-countup="300000" data-prefix="$">$300,000</span>
+          <span class="hero__goal-label" id="heroGoalLabel"></span>
+          <span class="hero__goal-note" id="heroGoalNote"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEN-SECOND ORIENTATION ================= -->
+  <section class="orient" aria-label="Sleep Out in brief">
+    <div class="wrap">
+      <div class="orient__grid" id="orientGrid"></div>
+    </div>
+  </section>
+
+  <!-- ================= WHY WE SLEEP OUT ================= -->
+  <section class="why" id="why">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--on-night" id="whyLabel" data-reveal></p>
+      <h2 class="why__statement" id="whyStatement"></h2>
+      <p class="why__body" id="whyBody" data-reveal style="--reveal-delay:200ms"></p>
+
+      <div class="pillars" id="pillars"></div>
+
+      <div class="why__cta btn-row" data-reveal>
+        <a class="btn btn--light" data-link="COVENANT_HOUSE_SLEEPOUT" href="#">
+          <span id="whyCta"></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= THREE WAYS TO HELP ================= -->
+  <section class="section section--tint" id="act">
+    <div class="wrap">
+      <p class="eyebrow" id="pathLabel" data-reveal></p>
+      <div class="paths" id="paths"></div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT TO EXPECT ================= -->
+  <section class="section" id="expect">
+    <div class="wrap">
+      <div class="split">
+        <div data-reveal>
+          <p class="eyebrow" id="expectLabel"></p>
+          <h2 class="display" id="expectHeading"></h2>
+          <p class="lede" id="expectLede" style="margin-top:1.25rem"></p>
+        </div>
+        <div data-reveal style="--reveal-delay:120ms">
+          <div class="timeline" id="timeline"></div>
+          <p class="expect__note" id="expectNote"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section section--tint" id="faq">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow" id="faqLabel"></p>
+        <h2 class="display" id="faqHeading"></h2>
+      </div>
+      <div class="faq__list" id="faqList" data-reveal></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <ul class="footer__links" id="footerLinks"></ul>
+      <div>
+        <p class="footer__note" id="footerSources"></p>
+        <p class="footer__note" id="footerDisclaimer"></p>
+      </div>
+    </div>
+    <div class="footer__meta">
+      <span id="footerMetaLeft"></span>
+      <span id="footerMetaRight"></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= STICKY ACTION BAR ================= -->
+<div class="actionbar" id="actionbar">
+  <span class="actionbar__label">Nov 19 · Soldier Field, Chicago</span>
+  <a class="btn btn--light" data-link="REGISTRATION" href="#"><span>Join</span></a>
+  <a class="btn btn--ghost-light" data-link="DONATE" href="#"><span>Donate</span></a>
+</div>
+
+<noscript>
+  <div style="padding:2rem;background:#14141A;color:#F2F0ED;text-align:center">
+    This page uses JavaScript to load campaign content.
+    Visit <a style="color:#C99BFF" href="https://www.sleepout.org/accenture">sleepout.org/accenture</a> for Sleep Out details.
+  </div>
+</noscript>
+
+<script src="assets/js/content.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

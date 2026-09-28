@@ -1,0 +1,1403 @@
+﻿/* =====================================================================
+   SLEEP OUT 2026 — ACCENTURE × COVENANT HOUSE
+   Design system + layout
+
+   Structure
+     01 Tokens
+     02 Reset & base
+     03 Typography primitives
+     04 Layout primitives
+     05 Buttons & links
+     06 Motion / reveal
+     07 Navigation
+     08 Hero
+     09 Orientation band
+     11 Why we sleep out (dark)
+       13 Pathways
+     14 Toolkit
+     15 Prepare
+     16 Locations
+     17 Commitment
+     18 FAQ
+     19 Footer
+     20 Responsive
+     21 Print & reduced motion
+   ===================================================================== */
+
+/* ---------------------------------------------------------------
+   01 TOKENS
+   --------------------------------------------------------------- */
+:root {
+  /* Surfaces — warm paper, not clinical white. Ink, not pure black. */
+  --paper:        #F6F4F1;
+  --paper-2:      #EFECE7;
+  --paper-3:      #E4DFD8;
+  --ink:          #14141A;
+  --ink-2:        #4A4A55;
+  --ink-3:        #7C7C88;
+  --rule:         rgba(20, 20, 26, 0.13);
+  --rule-strong:  rgba(20, 20, 26, 0.28);
+
+  /* Night surfaces */
+  --night:        #0B0B11;
+  --night-2:      #12121B;
+  --night-rule:   rgba(255, 255, 255, 0.14);
+  --on-night:     #F2F0ED;
+  --on-night-2:   rgba(242, 240, 237, 0.66);
+  --on-night-3:   rgba(242, 240, 237, 0.42);
+
+  /* Accent — used sparingly. A mark, a rule, a fill. Never a wash. */
+  --purple:       #A100FF;
+  --purple-deep:  #6D00B0;
+  --purple-soft:  rgba(161, 0, 255, 0.10);
+  /* Legible tint of the accent for use on night surfaces. Brightening
+     the accent itself pushes it toward magenta, so it is defined here. */
+  --purple-on-night: #C9A0FF;
+
+  /* Dawn — the counterpoint to the night. Even more sparing. */
+  --dawn:         #E39B3C;
+
+  /* Chicago — the light blue of the city flag. Used only on the venue
+     band and the skyline glow, so the local cue never competes with
+     the Accenture accent. */
+  --chicago:      #6FB8DE;
+
+  /* Type */
+  --sans: "Segoe UI Variable Display", "Segoe UI", Inter, ui-sans-serif,
+          system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+           Georgia, serif;
+  --mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+
+  /* Fluid scale */
+  --t-hero:   clamp(2.9rem, 8.2vw, 7.4rem);
+  --t-display:clamp(2.2rem, 5.4vw, 4.6rem);
+  --t-h2:     clamp(1.85rem, 3.6vw, 3.1rem);
+  --t-h3:     clamp(1.15rem, 1.7vw, 1.5rem);
+  --t-lede:   clamp(1.08rem, 1.5vw, 1.36rem);
+  --t-body:   clamp(1rem, 1.05vw, 1.12rem);
+  --t-small:  0.875rem;
+  --t-micro:  0.72rem;
+
+  /* Rhythm */
+  --gutter: clamp(1.25rem, 5vw, 5.5rem);
+  --section-y: clamp(5rem, 11vh, 10rem);
+  --maxw: 1320px;
+  --measure: 62ch;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------------------------------------------------------------
+   02 RESET & BASE
+   --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--t-body);
+  line-height: 1.62;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; }
+
+::selection { background: var(--purple); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  font-size: var(--t-small);
+}
+.skip-link:focus { left: 0.75rem; top: 0.75rem; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------------------------------------------------------------
+   03 TYPOGRAPHY PRIMITIVES
+   --------------------------------------------------------------- */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+.eyebrow {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--purple);
+  flex: none;
+}
+.eyebrow--on-night { color: var(--on-night-3); }
+
+.display { font-size: var(--t-display); }
+.h2 { font-size: var(--t-h2); }
+
+.lede {
+  font-size: var(--t-lede);
+  line-height: 1.52;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+
+.serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+.measure { max-width: var(--measure); }
+
+/* Inline source citation */
+.cite {
+  display: inline-block;
+  font-size: var(--t-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.25s, border-color 0.25s;
+}
+.cite:hover { color: var(--ink); border-color: var(--ink); }
+.cite--on-night { color: var(--on-night-3); border-color: var(--night-rule); }
+.cite--on-night:hover { color: var(--on-night); border-color: var(--on-night); }
+
+/* ---------------------------------------------------------------
+   04 LAYOUT PRIMITIVES
+   --------------------------------------------------------------- */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: var(--section-y); position: relative; }
+
+.section--night {
+  background: var(--night);
+  color: var(--on-night);
+}
+.section--night h1, .section--night h2, .section--night h3 { color: var(--on-night); }
+
+.section--tint { background: var(--paper-2); }
+
+.rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
+
+/* Two-column editorial split */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.section-head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+/* ---------------------------------------------------------------
+   05 BUTTONS & LINKS
+   --------------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.05rem 1.9rem;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bg);
+  border-radius: 999px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  white-space: nowrap;
+}
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--purple);
+  transform: translateY(101%);
+  transition: transform 0.4s var(--ease-out);
+  z-index: 0;
+}
+.btn > * { position: relative; z-index: 1; }
+.btn:hover::after { transform: translateY(0); }
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -12px rgba(161, 0, 255, 0.55);
+  border-color: var(--purple);
+}
+.btn:active { transform: translateY(0); }
+
+.btn .arrow {
+  transition: transform 0.35s var(--ease-out);
+  display: inline-block;
+}
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* Secondary — outlined */
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  border-color: var(--rule-strong);
+}
+.btn--ghost:hover { --btn-fg: #fff; color: #fff; }
+
+/* On dark surfaces */
+.btn--light { --btn-bg: var(--paper); --btn-fg: var(--ink); }
+.btn--light:hover { color: #fff; }
+.btn--ghost-light {
+  --btn-bg: transparent;
+  --btn-fg: var(--on-night);
+  border-color: var(--night-rule);
+}
+.btn--ghost-light:hover { color: #fff; }
+
+/* Quiet text link with animated underline */
+.link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  font-weight: 500;
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--purple), var(--purple));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-out), color 0.25s;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.link:hover { background-size: 100% 1px; color: var(--purple); }
+.link--on-night { border-bottom-color: var(--night-rule); }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------
+   06 MOTION / REVEAL
+   --------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Line-by-line headline reveal.
+   Headlines run a line-height below 1, so glyphs overflow their line box.
+   The mask is padded so ascenders and descenders aren't clipped, then
+   pulled back by an equal negative margin so spacing is unchanged. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.16em 0.24em;
+  margin-block: -0.16em -0.24em;
+}
+.line-mask > span {
+  display: block;
+  transform: translateY(125%);
+  transition: transform 1s var(--ease-out);
+  transition-delay: var(--line-delay, 0ms);
+}
+.is-in .line-mask > span,
+.line-mask.is-in > span { transform: none; }
+
+/* ---------------------------------------------------------------
+   07 NAVIGATION
+   --------------------------------------------------------------- */
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem var(--gutter);
+  color: var(--on-night);
+  transition: background 0.45s var(--ease), color 0.45s var(--ease),
+              padding 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(246, 244, 241, 0.86);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--rule);
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+  z-index: -1;
+}
+.nav.is-stuck {
+  color: var(--ink);
+  padding-block: 0.75rem;
+}
+.nav.is-stuck::before { opacity: 1; }
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: inherit;
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+.nav__mark {
+  width: 9px; height: 9px;
+  background: var(--purple);
+  border-radius: 50%;
+  flex: none;
+  box-shadow: 0 0 0 0 rgba(161, 0, 255, 0.5);
+  animation: pulse 3.4s var(--ease) infinite;
+}
+@keyframes pulse {
+  0%, 70%, 100% { box-shadow: 0 0 0 0 rgba(161, 0, 255, 0.45); }
+  35% { box-shadow: 0 0 0 9px rgba(161, 0, 255, 0); }
+}
+
+.nav__links {
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+  font-size: var(--t-small);
+}
+.nav__links a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.78;
+  transition: opacity 0.25s;
+  position: relative;
+}
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -5px;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out);
+}
+.nav__links a:hover { opacity: 1; }
+.nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav__cta {
+  padding: 0.6rem 1.15rem;
+  font-size: var(--t-small);
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease),
+              border-color 0.3s var(--ease);
+}
+.nav__cta:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: #fff;
+}
+
+/* Scroll progress hairline */
+.nav__progress {
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--purple), var(--dawn));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.nav.is-stuck .nav__progress { opacity: 1; }
+
+/* ---------------------------------------------------------------
+   08 HERO
+   --------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--night);
+  color: var(--on-night);
+  padding-top: 8rem;
+  /* Clears the skyline silhouette at the base of the hero */
+  padding-bottom: clamp(4.5rem, 12vh, 8rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Layered night sky. Replaced/underlaid by a photograph when one is set. */
+.hero__sky {
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  background:
+    radial-gradient(90% 62% at 18% 0%, #1E1636 0%, transparent 62%),
+    radial-gradient(70% 55% at 88% 12%, #14203A 0%, transparent 60%),
+    /* Stadium glow behind the skyline — cool light on the horizon */
+    radial-gradient(70% 34% at 50% 96%, rgba(111, 184, 222, 0.22) 0%, transparent 66%),
+    radial-gradient(120% 70% at 50% 112%, rgba(227, 155, 60, 0.14) 0%, transparent 58%),
+    linear-gradient(180deg, #0A0A12 0%, #0B0B11 55%, #0E1018 100%);
+}
+.hero__stars {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  opacity: 0.55;
+}
+
+/* Stadium floodlights — four soft beams raking down from above the
+   skyline. Suggests Soldier Field under lights without needing a photo. */
+.hero__lights {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero__lights span {
+  position: absolute;
+  top: -18%;
+  width: 34vw;
+  height: 95%;
+  background: linear-gradient(
+    to bottom,
+    rgba(214, 232, 245, 0.16) 0%,
+    rgba(214, 232, 245, 0.06) 42%,
+    transparent 78%
+  );
+  filter: blur(26px);
+  transform-origin: top center;
+}
+.hero__lights span:nth-child(1) { left: -6%;  transform: rotate(14deg); }
+.hero__lights span:nth-child(2) { left: 24%;  transform: rotate(5deg);  opacity: 0.75; }
+.hero__lights span:nth-child(3) { right: 22%; transform: rotate(-5deg); opacity: 0.75; }
+.hero__lights span:nth-child(4) { right: -6%; transform: rotate(-14deg); }
+
+/* Chicago skyline silhouette along the horizon */
+.hero__skyline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(70px, 11vh, 150px);
+  z-index: -2;
+  display: block;
+  pointer-events: none;
+}
+.hero__skyline polygon {
+  fill: #06060A;
+}
+
+/* Scrim over the skyline so the copy sitting above it stays legible */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(140px, 30vh, 340px);
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(8, 8, 14, 0.9) 0%,
+    rgba(8, 8, 14, 0.5) 40%,
+    transparent 100%
+  );
+}
+/* Fine grain keeps large flat areas from banding and reads as film. */
+.hero__grain {
+  position: absolute;
+  inset: -50%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 7s steps(6) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -2%); }
+  80% { transform: translate(3%, 1%); }
+}
+
+.hero__photo {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.45;
+  filter: grayscale(0.25) contrast(1.05);
+}
+.hero__inner {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--on-night-2);
+  margin-bottom: clamp(1.5rem, 4vh, 2.75rem);
+}
+.hero__eyebrow .divider {
+  width: clamp(2rem, 6vw, 4.5rem);
+  height: 1px;
+  background: var(--night-rule);
+}
+.hero__eyebrow .year { color: var(--on-night); }
+
+.hero__headline {
+  font-size: var(--t-hero);
+  font-weight: 600;
+  line-height: 0.93;
+  letter-spacing: -0.042em;
+  margin: 0 0 clamp(1.5rem, 3.5vh, 2.5rem);
+  max-width: 15ch;
+}
+.hero__headline .accent {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* ---------------------------------------------------------------
+   VENUE — Soldier Field, given display treatment in the hero.
+   The venue is the campaign's strongest draw, so it reads as a
+   headline element rather than a caption.
+   --------------------------------------------------------------- */
+.venue {
+  margin-bottom: clamp(1.75rem, 4vh, 2.75rem);
+  /* Field markings: a hairline with evenly spaced yard ticks */
+  padding-bottom: clamp(1.25rem, 2.5vh, 1.75rem);
+  border-bottom: 1px solid var(--night-rule);
+  position: relative;
+}
+.venue::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 7px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--night-rule) 0 1px,
+    transparent 1px 34px
+  );
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.venue__label {
+  display: block;
+  font-size: var(--t-micro);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--on-night-3);
+  margin-bottom: 0.9rem;
+}
+
+.venue__name {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  flex-wrap: wrap;
+}
+.venue__place {
+  font-size: clamp(1.7rem, 4.6vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #fff;
+  /* A faint stadium-light bloom — kept tight, or it reads as a smudge */
+  text-shadow: 0 0 22px rgba(111, 184, 222, 0.3);
+}
+
+.venue__tagline {
+  display: block;
+  margin-top: 0.85rem;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--chicago);
+}
+
+.venue__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+  margin-top: 0.85rem;
+  font-size: var(--t-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--on-night-3);
+}
+.venue__date { color: var(--on-night-2); }
+.venue__sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--on-night-3);
+  flex: none;
+}
+
+/* Four six-pointed stars, after the Chicago flag */
+.venue__stars {
+  display: inline-flex;
+  gap: 0.34em;
+  flex: none;
+  font-size: clamp(1.7rem, 4.6vw, 3.6rem);
+}
+.venue__stars i {
+  width: 0.26em;
+  height: 0.26em;
+  background: var(--chicago);
+  display: block;
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%,
+    79% 91%, 50% 70%, 21% 91%, 32% 57%,
+    2% 35%, 39% 35%
+  );
+}
+/* One cluster of stars is enough on narrow screens */
+@media (max-width: 720px) {
+  .venue__name > .venue__stars:last-child { display: none; }
+}
+
+.hero__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: end;
+  /* No rule here — the venue block below the headline already
+     provides the horizontal division. */
+  padding-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.hero__lede {
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--on-night-2);
+  max-width: 44ch;
+  margin: 0 0 1.9rem;
+}
+
+.hero__goal { text-align: right; }
+.hero__goal-value {
+  font-size: clamp(2.6rem, 6.5vw, 5.4rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  display: block;
+  background: linear-gradient(94deg, #FFFFFF 12%, #D7B6FF 58%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+.hero__goal-label {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: var(--t-micro);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--on-night-3);
+}
+/* Milestone and, once verified, the live total. Sits under the goal in
+   place of the fundraising section that used to carry them. */
+.hero__goal-note {
+  display: block;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--night-rule);
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--on-night-2);
+}
+.hero__goal-note:empty { display: none; }
+.hero__goal-note strong { color: var(--on-night); font-weight: 600; }
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: clamp(2rem, 5vh, 3.25rem);
+  color: var(--on-night-2);
+  text-decoration: none;
+  font-size: var(--t-small);
+  transition: color 0.3s;
+}
+.hero__scroll:hover { color: var(--on-night); }
+.hero__scroll .chev {
+  display: inline-block;
+  animation: bob 2.6s var(--ease) infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ---------------------------------------------------------------
+   09 ORIENTATION BAND — the ten-second answer
+   --------------------------------------------------------------- */
+.orient {
+  background: var(--night);
+  color: var(--on-night);
+  padding-block: clamp(3rem, 7vh, 5.5rem);
+  border-top: 1px solid var(--night-rule);
+}
+.orient__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.orient__item {
+  padding: 0 clamp(1rem, 2.5vw, 2.25rem);
+  border-left: 1px solid var(--night-rule);
+}
+.orient__item:first-child { padding-left: 0; border-left: 0; }
+.orient__label {
+  font-size: var(--t-micro);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--purple-on-night);
+  margin-bottom: 0.9rem;
+  font-weight: 600;
+}
+.orient__text {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--on-night-2);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------
+   10 THE GOAL
+   --------------------------------------------------------------- */
+/* Statistic row — big numerals on rules, no boxes */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: clamp(4rem, 8vw, 6.5rem);
+  border-top: 1px solid var(--rule-strong);
+}
+/* Flex so the citation sits on a common baseline across the row,
+   whatever the label length. */
+.stat {
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1rem, 2vw, 2rem) 0 0;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+}
+.stat .cite { margin-top: auto; align-self: flex-start; }
+.stat:last-child { border-right: 0; }
+.stat__value {
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  display: block;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.85rem;
+}
+.stat__value em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.62em;
+  letter-spacing: -0.01em;
+}
+.stat__label {
+  font-size: 0.94rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+  margin-bottom: 0.9rem;
+  max-width: 24ch;
+}
+
+/* ---------------------------------------------------------------
+   11 WHY WE SLEEP OUT (dark, full-bleed)
+   --------------------------------------------------------------- */
+.why {
+  position: relative;
+  background: var(--night);
+  color: var(--on-night);
+  overflow: hidden;
+  isolation: isolate;
+  padding-block: clamp(6rem, 16vh, 12rem);
+}
+.why::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(75% 55% at 78% 8%, rgba(161, 0, 255, 0.16) 0%, transparent 58%),
+    radial-gradient(85% 60% at 12% 96%, rgba(227, 155, 60, 0.12) 0%, transparent 60%),
+    var(--night);
+}
+.why__statement {
+  font-size: clamp(2.1rem, 5.6vw, 5rem);
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.042em;
+  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+  max-width: 21ch;
+}
+.why__statement .soft {
+  color: var(--on-night-3);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.why__body {
+  font-size: var(--t-lede);
+  line-height: 1.55;
+  color: var(--on-night-2);
+  max-width: 54ch;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: clamp(4rem, 9vw, 7rem);
+  border-top: 1px solid var(--night-rule);
+}
+.pillar {
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2.5rem) 0 0;
+  border-right: 1px solid var(--night-rule);
+}
+.pillar:last-child { border-right: 0; }
+.pillar__num {
+  font-size: var(--t-micro);
+  letter-spacing: 0.2em;
+  color: var(--purple-on-night);
+  font-weight: 600;
+}
+.pillar__title {
+  font-size: var(--t-h3);
+  margin: 1rem 0 0.7rem;
+  font-weight: 600;
+}
+.pillar__text { color: var(--on-night-2); font-size: 0.98rem; margin: 0; }
+
+.why__cta { margin-top: clamp(3rem, 6vw, 4.5rem); }
+/* ---------------------------------------------------------------
+   13 PATHWAYS — numbered full-width rows
+   --------------------------------------------------------------- */
+.paths { border-top: 1px solid var(--rule-strong); }
+
+.path {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 0.9fr) minmax(0, 1.2fr) auto;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: start;
+  padding: clamp(2.25rem, 4.5vw, 3.5rem) 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  transition: padding-left 0.5s var(--ease-out);
+}
+.path::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1.5rem;
+  background: var(--paper-2);
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+  z-index: -1;
+  border-radius: 3px;
+}
+.path:hover::before { opacity: 1; }
+.path:hover { padding-left: 1rem; }
+
+.path__num {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  /* Small accent text on paper uses the deeper purple — the bright
+     accent falls below AA contrast at this size. */
+  color: var(--purple-deep);
+  padding-top: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.path__title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  margin: 0 0 0.5rem;
+  line-height: 1;
+}
+.path__commit {
+  font-size: var(--t-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.path__text { color: var(--ink-2); margin: 0 0 0.8rem; }
+
+/* A stated condition of taking part, not body copy */
+.path__req {
+  margin: 0;
+  padding: 0.7rem 0 0 1rem;
+  border-left: 2px solid var(--purple);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.path__detail {
+  font-size: var(--t-small);
+  color: var(--ink-3);
+  margin: 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule);
+}
+.path__cta { padding-top: 0.25rem; }
+
+/* ---------------------------------------------------------------
+   14 TOOLKIT
+   --------------------------------------------------------------- */
+.toolkit__link-field {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 44rem;
+}
+.toolkit__input {
+  flex: 1 1 22rem;
+  min-width: 0;
+  padding: 0.95rem 1.2rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.96rem;
+  color: var(--ink);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.toolkit__input::placeholder { color: var(--ink-3); }
+.toolkit__input:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px var(--purple-soft);
+}
+.toolkit__hint {
+  font-size: var(--t-small);
+  color: var(--ink-3);
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.templates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.template {
+  background: var(--paper);
+  padding: clamp(1.5rem, 2.6vw, 2.1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: background 0.35s var(--ease);
+}
+.template:hover { background: var(--paper-2); }
+.template__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.template__channel {
+  font-size: var(--t-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 600;
+}
+.template__subject {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.template__body {
+  font-family: var(--sans);
+  font-size: 0.93rem;
+  line-height: 1.58;
+  color: var(--ink-2);
+  white-space: pre-wrap;
+  margin: 0;
+  flex: 1;
+}
+/* Marks the words the sender still has to fill in. No padding — it sits
+   inline against punctuation and must not push it away from the word. */
+.template__body .token {
+  color: var(--purple-deep);
+  font-weight: 600;
+  border-bottom: 1px dashed currentColor;
+}
+.copy-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  border-radius: 999px;
+  font-size: var(--t-small);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+.copy-btn:hover { border-color: var(--ink); }
+.copy-btn.is-copied {
+  border-color: var(--purple);
+  color: var(--purple-deep);
+  background: var(--purple-soft);
+}
+
+.tips {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule-strong);
+}
+.tip {
+  display: flex;
+  gap: 0.9rem;
+  font-size: 0.95rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.tip__num {
+  font-size: var(--t-micro);
+  color: var(--purple-deep);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding-top: 0.25em;
+  flex: none;
+}
+
+/* ---------------------------------------------------------------
+   15 PREPARE
+   --------------------------------------------------------------- */
+.timeline { position: relative; }
+.timeline__item {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.timeline__item:first-child { border-top: 1px solid var(--rule-strong); }
+.timeline__time {
+  font-size: var(--t-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--purple-deep);
+  font-weight: 600;
+  padding-top: 0.3rem;
+}
+.timeline__title { font-size: var(--t-h3); margin: 0 0 0.35rem; font-weight: 600; }
+.timeline__text { color: var(--ink-2); margin: 0; font-size: 0.98rem; }
+
+.expect__note {
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+  color: var(--ink-3);
+}
+
+/* Sub-page (share.html) — no hero, so the first section clears the nav */
+.page--sub .subhead { padding-top: clamp(7rem, 14vh, 10rem); }
+
+/* ---------------------------------------------------------------
+   18 FAQ
+   --------------------------------------------------------------- */
+.faq__list { border-top: 1px solid var(--rule-strong); }
+.faq__item { border-bottom: 1px solid var(--rule); }
+.faq__q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+.faq__q:hover { color: var(--purple); }
+.faq__icon {
+  flex: none;
+  width: 1.15rem; height: 1.15rem;
+  position: relative;
+}
+.faq__icon::before, .faq__icon::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  transition: transform 0.45s var(--ease-out), opacity 0.3s;
+}
+.faq__icon::before { inset: 50% 0 auto 0; height: 1px; }
+.faq__icon::after { inset: 0 50% 0 auto; width: 1px; }
+.faq__q[aria-expanded="true"] .faq__icon::after { transform: rotate(90deg); opacity: 0; }
+
+.faq__a {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.5s var(--ease-out);
+}
+.faq__a-inner {
+  padding: 0 0 1.75rem;
+  max-width: 64ch;
+  color: var(--ink-2);
+}
+
+/* ---------------------------------------------------------------
+   19 FOOTER
+   --------------------------------------------------------------- */
+
+.footer {
+  background: var(--night);
+  color: var(--on-night-3);
+  padding-block: clamp(3rem, 6vh, 4.5rem);
+  border-top: 1px solid var(--night-rule);
+  font-size: var(--t-small);
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.footer__links a {
+  color: var(--on-night-2);
+  text-decoration: none;
+  transition: color 0.25s;
+  width: fit-content;
+}
+.footer__links a:hover { color: var(--on-night); }
+.footer__note { margin: 0 0 1.1rem; line-height: 1.6; max-width: 66ch; }
+.footer__meta {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--night-rule);
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: var(--t-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Sticky action bar — appears after the hero */
+.actionbar {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translate(-50%, 160%);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.55rem 0.55rem 1.4rem;
+  background: rgba(20, 20, 26, 0.93);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  box-shadow: 0 18px 50px -18px rgba(0,0,0,0.65);
+  transition: transform 0.6s var(--ease-out);
+  max-width: calc(100vw - 2rem);
+}
+.actionbar.is-visible { transform: translate(-50%, 0); }
+.actionbar__label {
+  color: var(--on-night-2);
+  font-size: var(--t-small);
+  white-space: nowrap;
+}
+.actionbar .btn { padding: 0.7rem 1.35rem; font-size: 0.88rem; }
+
+/* ---------------------------------------------------------------
+   20 RESPONSIVE
+   --------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat { border-bottom: 1px solid var(--rule); padding-bottom: 1.75rem; }
+  .stat:nth-child(2n) { border-right: 0; }
+  .stat:nth-last-child(-n+2) { border-bottom: 0; }
+  .orient__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 0; }
+  .orient__item:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .path { grid-template-columns: 3.5rem minmax(0, 1fr); }
+  .path__cta { grid-column: 2; }
+  .path__body { grid-column: 2; }
+}
+
+@media (max-width: 860px) {
+  :root { --section-y: clamp(3.75rem, 9vh, 6rem); }
+  .nav__links { display: none; }
+  .split, .footer__grid, .templates {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero { min-height: auto; padding-top: 7rem; padding-bottom: 3.5rem; }
+  .hero__body { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .hero__goal { text-align: left; }
+  .pillars { grid-template-columns: minmax(0, 1fr); }
+  .pillar {
+    border-right: 0;
+    border-bottom: 1px solid var(--night-rule);
+    padding-bottom: 1.75rem;
+    padding-right: 0;
+  }
+  .pillar:last-child { border-bottom: 0; }
+  .timeline__item { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .actionbar { padding-left: 0.55rem; }
+  .actionbar__label { display: none; }
+}
+
+@media (max-width: 560px) {
+  .stats { grid-template-columns: minmax(0, 1fr); }
+  .stat { border-right: 0; }
+  .orient__grid { grid-template-columns: minmax(0, 1fr); }
+  .orient__item { padding-left: 0; border-left: 0; }
+  .btn { width: 100%; justify-content: center; }
+  .actionbar .btn { width: auto; }
+  .hero__headline { max-width: none; }
+}
+
+/* ---------------------------------------------------------------
+   21 REDUCED MOTION & PRINT
+   --------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+  .line-mask > span { transform: none; }
+  .why::after { transform: scaleX(1); }
+}
+
+@media print {
+  .nav, .actionbar, .hero__grain, .hero__stars, .copy-btn { display: none !important; }
+  body { background: #fff; color: #000; }
+  .section--night, .why, .orient, .hero, .footer {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .faq__a { height: auto !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.7em; }
+}
