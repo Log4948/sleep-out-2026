@@ -40,10 +40,9 @@ const CAMPAIGN = {
       date: 'Thursday, November 19, 2026',
       note: 'and Accenture sites nationwide'
     },
-    goalValue: 300000,
-    goalLabel: 'Accenture team goal',
-    // First checkpoint, shown as a small line under the goal.
-    goalMilestone: '$100,000 by end of October',
+    goalValue: 100000,
+    goalLabel: 'Chicago team goal',
+    goalMilestone: null,
     // Drop in an approved photograph to replace the generated night
     // treatment, e.g. 'assets/img/hero.jpg'. Leave null to keep it.
     image: null,
@@ -62,7 +61,7 @@ const CAMPAIGN = {
     },
     {
       label: 'What',
-      text: 'One night outside at Soldier Field, home of the Bears, raising the funds that keep those doors open.'
+      text: 'One night outside at Soldier Field, home of the Bears, raising funds that keep Covenant House open for young people who need it.'
     },
     {
       label: 'When',
@@ -108,7 +107,7 @@ const CAMPAIGN = {
       '*It can help change what comes next.*'
     ],
     body:
-      'We are not pretending to understand. We are choosing to pay attention, and to put real money behind it. For one night we trade a bed for a sleeping bag and a hard surface, and we spend the hours before dawn learning from the people who do this work.',
+      'We are not pretending to understand. We are choosing to pay attention, and to put real money behind it. For one night we trade a bed for a sleeping bag and a hard surface, and we spend the hours before dawn walking in someone else’s shoes.',
     pillars: [],
     cta: { label: 'Why Sleep Out matters', href: 'COVENANT_HOUSE_SLEEPOUT' }
   },
@@ -124,8 +123,6 @@ const CAMPAIGN = {
         title: 'Sleep Out',
         commitment: 'One night · November 19',
         text: 'Register on myGiving, get your personal fundraising page, and join us on the field at Soldier Field, or at an Accenture site near you.',
-        // Rendered as a marked requirement line, not body copy.
-        requirement: 'You must raise $250 to take part in the Sleep Out.',
         cta: { label: 'Join the Sleep Out', href: 'REGISTRATION' }
       },
       {
@@ -156,12 +153,12 @@ const CAMPAIGN = {
       {
         time: 'Evening',
         title: 'Arrive and check in',
-        text: 'Meet the Accenture group, find your spot on the field, settle in.'
+        text: 'Meet the Accenture group, find your spot, settle in.'
       },
       {
         time: 'Before lights out',
         title: 'Hear from the people doing the work',
-        text: 'Leaders from Covenant House, Accenture and other companies speak. This is the part participants remember.'
+        text: 'We hear from Covenant House leaders and from people who have been through the program themselves. Their stories are the part of the night participants remember most.'
       },
       {
         time: 'Overnight',
@@ -171,7 +168,7 @@ const CAMPAIGN = {
       {
         time: 'The next day',
         title: 'Carry it into your day',
-        text: 'An early finish, then work and everything else on very little sleep. It is the smallest glimpse of what some young people carry every day, and it puts what Covenant House provides into perspective.'
+        text: 'An early finish, then you carry your full day of work and responsibilities on very little sleep. A small and temporary glimpse of what some young people face, highlighting the value of what Covenant House provides.'
       }
     ],
     note: 'Sites operate in all weather and are staffed through the night. If you have an access need or health consideration, tell your site organizer early. They will work with you.'
@@ -186,15 +183,15 @@ const CAMPAIGN = {
     items: [
       {
         q: 'Do I have to raise money to take part?',
-        a: 'Yes. Covenant House asks each person sleeping out in person to raise $250. The fundraising is the point. The night itself is what makes the ask meaningful. Minimums can vary by city, so check your local Sleep Out page when you register.'
+        a: 'Yes. Covenant House has an expectation for a donation from the participants. Accenture has created tiered fundraising goals based on level. Fundraising is the point. The night itself is what makes the ask meaningful. Reach out to Matt (matthew.hayes@accenture.com) or Hadley (hadley.mueller@accenture.com) with any questions.'
       },
       {
         q: 'What if I can’t hit my goal?',
-        a: 'Almost everyone gets there, and you are not doing it alone. You get a personal fundraising page, a fundraising coach through Covenant House, and ready-made messages on this site. Reach $50 by October 10 and you receive a special gift as well.'
+        a: 'You are not doing this alone. You get a personal fundraising page, a fundraising coach through Covenant House, and ready-made messages on this site. Reach out to your office fundraising leads and they will help you get there. We are a team in this.'
       },
       {
         q: 'Does Accenture match donations?',
-        a: 'Funds raised through myGiving are matched dollar-for-dollar once 10 Accenture donations are received, up to a $1,000 cap.'
+        a: 'Accenture has pledged $100,000 to Covenant House nationally.'
       },
       {
         q: 'I can’t sleep outside. Can I still help?',
@@ -265,7 +262,7 @@ const CAMPAIGN = {
     REGISTRATION:
       'https://mygivingaccenture.yourcause.com/home#/newvolunteer/event/1448907',
     DONATE:
-      'https://mygivingaccenture.yourcause.com/public#/fundraising/35997',
+      'https://mygivingaccenture.yourcause.com/home#/fundraising/36107',
     ACCENTURE_SLEEPOUT: 'https://www.sleepout.org/accenture',
     COVENANT_HOUSE_SLEEPOUT: 'https://www.sleepout.org/chicago',
     COVENANT_HOUSE: 'https://www.covenanthouse.org/about-us'
