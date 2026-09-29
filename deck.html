@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleep Out 2026 · Accenture × Covenant House</title>
+<style>
+/* ── Reset & tokens ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --night:      #0B0B11;
+  --night-2:    #12121C;
+  --night-3:    #1A1A28;
+  --purple:     #A100FF;
+  --purple-mid: #C99BFF;
+  --chicago:    #6FB8DE;
+  --white:      #F2F0ED;
+  --muted:      rgba(242,240,237,0.55);
+  --rule:       rgba(242,240,237,0.12);
+
+  --sans: -apple-system, 'Segoe UI', system-ui, sans-serif;
+  --serif: Georgia, 'Times New Roman', serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--night);
+  color: var(--white);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Deck shell ─────────────────────────────────────────── */
+.deck {
+  width: 100%; height: 100%;
+  position: relative;
+}
+
+/* ── Slides ─────────────────────────────────────────────── */
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: clamp(3rem, 7vw, 7rem) clamp(3rem, 8vw, 9rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+  overflow: hidden;
+}
+.slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.slide--center { align-items: center; text-align: center; }
+
+/* ── Shared text styles ──────────────────────────────────── */
+.eyebrow {
+  font-size: clamp(0.62rem, 1.1vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.6rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple); flex-shrink: 0; }
+
+.display {
+  font-size: clamp(2.4rem, 5.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  max-width: 17ch;
+}
+.display em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--purple-mid); }
+
+.sub {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 1.6rem;
+  max-width: 52ch;
+}
+
+.body-text {
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 60ch;
+  margin-top: 1.4rem;
+}
+
+.statement {
+  font-size: clamp(1.6rem, 3.4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+.statement em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--purple-mid); }
+
+.label {
+  font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 0.9rem;
+}
+
+/* ── Slide backgrounds ───────────────────────────────────── */
+.slide::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 70% 40%, rgba(161,0,255,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.slide--hero::before {
+  background:
+    radial-gradient(ellipse 60% 55% at 75% 35%, rgba(111,184,222,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 30% 60%, rgba(161,0,255,0.09) 0%, transparent 65%);
+}
+
+.slide--goal::before {
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(161,0,255,0.1) 0%, transparent 70%);
+}
+
+/* ── Slide 1: Hero ───────────────────────────────────────── */
+.hero__badge {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2.4rem;
+}
+.hero__badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
+
+.hero__venue {
+  margin-top: 2.4rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+.venue-name {
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--chicago);
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.venue-name .stars { display: flex; gap: 0.3rem; }
+.venue-name .stars i {
+  display: block; width: 10px; height: 10px;
+  background: var(--chicago);
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  font-style: normal;
+}
+.venue-date {
+  margin-top: 0.4rem;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  color: var(--muted);
+}
+
+/* ── Slide: Quote ────────────────────────────────────────── */
+.quote-mark {
+  font-size: clamp(4rem, 8vw, 7rem);
+  line-height: 0.8;
+  color: var(--purple);
+  font-family: var(--serif);
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+/* ── Slide: Pillars / columns ────────────────────────────── */
+.cols {
+  display: grid;
+  gap: 2rem;
+  margin-top: 3rem;
+  width: 100%;
+}
+.cols--3 { grid-template-columns: repeat(3, 1fr); }
+.cols--2 { grid-template-columns: repeat(2, 1fr); }
+
+.col {
+  border-top: 2px solid var(--purple);
+  padding-top: 1.4rem;
+}
+.col__num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--purple);
+  margin-bottom: 0.7rem;
+}
+.col__title {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+.col__text {
+  font-size: clamp(0.85rem, 1.3vw, 0.97rem);
+  line-height: 1.6;
+  color: var(--muted);
+}
+.col__req {
+  margin-top: 0.8rem;
+  padding-left: 0.8rem;
+  border-left: 2px solid var(--chicago);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* ── Slide: Timeline ─────────────────────────────────────── */
+.timeline {
+  display: flex; flex-direction: column;
+  gap: 1.6rem;
+  margin-top: 2.4rem;
+  width: 100%;
+  max-width: 68ch;
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+.tl-time {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--chicago);
+  padding-top: 0.2rem;
+}
+.tl-title {
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.tl-text {
+  font-size: clamp(0.82rem, 1.2vw, 0.92rem);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ── Slide: Goal ─────────────────────────────────────────── */
+.goal-figure {
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  background: linear-gradient(135deg, #fff 30%, var(--purple-mid));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 1.2rem 0 0.6rem;
+}
+.goal-label {
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.links-row {
+  display: flex; flex-wrap: wrap; gap: 0.8rem;
+  margin-top: 2.4rem;
+}
+.link-chip {
+  display: inline-block;
+  padding: 0.55rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.link-chip--primary { background: var(--purple); color: #fff; }
+.link-chip--ghost { border: 1px solid var(--rule); color: var(--white); }
+.link-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ── Slide: Closer ───────────────────────────────────────── */
+.closer-headline {
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.closer-headline em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--purple-mid);
+}
+
+/* ── Navigation chrome ───────────────────────────────────── */
+.nav-bar {
+  position: fixed;
+  bottom: 2.2rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 1.6rem;
+  z-index: 100;
+}
+.nav-dots {
+  display: flex; gap: 0.45rem;
+}
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--rule);
+  border: 1px solid rgba(242,240,237,0.3);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+.nav-dot.is-active {
+  background: var(--purple);
+  border-color: var(--purple);
+  transform: scale(1.35);
+}
+
+.nav-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: rgba(11,11,17,0.7);
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+.nav-btn:hover { border-color: var(--purple); background: rgba(161,0,255,0.15); }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+.slide-counter {
+  position: fixed;
+  top: 1.6rem; right: 2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  z-index: 100;
+}
+
+.fullscreen-btn {
+  position: fixed;
+  top: 1.4rem; left: 2rem;
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 0.4rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: border-color 0.2s, color 0.2s;
+}
+.fullscreen-btn:hover { border-color: var(--purple); color: var(--white); }
+
+/* ── Skyline decoration (hero slide) ─────────────────────── */
+.skyline {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 22%;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.rule { width: 3rem; height: 2px; background: var(--purple); margin: 1.4rem 0; }
+</style>
+</head>
+<body>
+
+<button class="fullscreen-btn">⛶ Fullscreen</button>
+<div class="slide-counter" id="counter">1 / 8</div>
+
+<div class="deck" id="deck">
+
+  <!-- ─── Slide 1: Cover ─────────────────────────────────── -->
+  <section class="slide slide--hero is-active" data-slide="0">
+    <div class="hero__badge"><span class="dot"></span>Accenture × Covenant House</div>
+
+    <div class="display">
+      One night outside.<br><em>A lasting impact.</em>
+    </div>
+
+    <div class="hero__venue">
+      <div class="venue-name">
+        <span class="stars"><i></i><i></i><i></i><i></i></span>
+        Soldier Field
+        <span class="stars"><i></i><i></i><i></i><i></i></span>
+      </div>
+      <div class="venue-date">Thursday, November 19, 2026 · Home of the Chicago Bears · and Accenture sites nationwide</div>
+    </div>
+
+    <svg class="skyline" viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <polygon fill="white" points="0,180 0,150 40,150 40,120 80,120 80,155 120,155 120,100 155,100 155,85 195,85 195,125 225,125 225,70 260,70 260,50 275,50 275,15 282,15 282,50 290,50 290,35 330,35 330,50 338,50 338,15 345,15 345,50 360,50 360,110 395,110 395,145 430,145 430,95 465,95 465,125 500,125 500,75 535,75 535,40 550,40 550,5 557,5 557,40 565,40 565,25 605,25 605,40 613,40 613,5 620,5 620,40 635,40 635,110 670,110 670,140 705,140 705,90 740,90 740,120 775,120 775,75 810,75 810,100 845,100 845,55 865,55 865,20 871,20 871,55 885,55 885,20 891,20 891,55 910,55 910,110 945,110 945,145 980,145 980,100 1015,100 1015,130 1050,130 1050,80 1085,80 1085,115 1120,115 1120,150 1155,150 1155,105 1190,105 1190,140 1225,140 1225,90 1260,90 1260,125 1295,125 1295,160 1330,160 1330,115 1365,115 1365,145 1405,145 1405,165 1440,165 1440,180"/>
+    </svg>
+  </section>
+
+  <!-- ─── Slide 2: Soldier Field ─────────────────────────── -->
+  <section class="slide slide--center" data-slide="3" style="background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(111,184,222,0.1) 0%, transparent 65%);">
+    <div class="eyebrow" style="justify-content:center"><span class="dot" style="background:var(--chicago)"></span>The flagship venue</div>
+    <div style="font-size:clamp(0.7rem,1.1vw,0.85rem); font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--chicago); margin-bottom:0.8rem">This year we sleep out at</div>
+    <div style="font-size:clamp(3.5rem,9vw,8rem); font-weight:800; letter-spacing:0.04em; text-transform:uppercase; color:#fff; text-shadow: 0 0 60px rgba(111,184,222,0.35)">
+      Soldier Field
+    </div>
+    <div style="font-family:var(--serif); font-style:italic; font-size:clamp(1rem,2vw,1.5rem); color:var(--chicago); margin-top:0.4rem">Home of the Chicago Bears</div>
+    <div style="margin-top:1.8rem; font-size:clamp(0.85rem,1.4vw,1.1rem); color:var(--muted)">Thursday, November 19, 2026 · and Accenture sites nationwide</div>
+
+    <svg class="skyline" viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true" style="opacity:0.12">
+      <polygon fill="white" points="0,180 0,150 40,150 40,120 80,120 80,155 120,155 120,100 155,100 155,85 195,85 195,125 225,125 225,70 260,70 260,50 275,50 275,15 282,15 282,50 290,50 290,35 330,35 330,50 338,50 338,15 345,15 345,50 360,50 360,110 395,110 395,145 430,145 430,95 465,95 465,125 500,125 500,75 535,75 535,40 550,40 550,5 557,5 557,40 565,40 565,25 605,25 605,40 613,40 613,5 620,5 620,40 635,40 635,110 670,110 670,140 705,140 705,90 740,90 740,120 775,120 775,75 810,75 810,100 845,100 845,55 865,55 865,20 871,20 871,55 885,55 885,20 891,20 891,55 910,55 910,110 945,110 945,145 980,145 980,100 1015,100 1015,130 1050,130 1050,80 1085,80 1085,115 1120,115 1120,150 1155,150 1155,105 1190,105 1190,140 1225,140 1225,90 1260,90 1260,125 1295,125 1295,160 1330,160 1330,115 1365,115 1365,145 1405,145 1405,165 1440,165 1440,180"/>
+    </svg>
+  </section>
+
+  <!-- ─── Slide 3: Who we're supporting ─────────────────── -->
+  <section class="slide" data-slide="2">
+    <div class="eyebrow"><span class="dot"></span>Who we're supporting</div>
+    <div class="statement">
+      Covenant House gives young people facing homelessness a safe place to sleep, <em>and a path to what comes next.</em>
+    </div>
+    <p class="body-text">
+      Since 1972, Covenant House has opened its doors to more than 1.5 million young people — offering shelter, meals, healthcare, counseling, education and job training across 34 cities in five countries. Their doors are open every hour of every day.
+    </p>
+  </section>
+
+  <!-- ─── Slide 4: Why we sleep out ─────────────────────── -->
+  <section class="slide" data-slide="3">
+    <div class="eyebrow"><span class="dot"></span>Why we sleep out</div>
+    <div class="quote-mark">"</div>
+    <div class="display" style="max-width:20ch">
+      One night can't replicate homelessness.<br><em>It can help change what comes next.</em>
+    </div>
+    <p class="body-text">
+      We are not pretending to understand. We are choosing to pay attention, and to put real money behind it. For one night we trade a bed for a sleeping bag and a hard surface, and we spend the hours before dawn learning from the people who do this work.
+    </p>
+  </section>
+
+  <!-- ─── Slide 5: Three ways to help ────────────────────── -->
+  <section class="slide" data-slide="4">
+    <div class="eyebrow"><span class="dot"></span>Three ways to help</div>
+    <div class="cols cols--3">
+      <div class="col">
+        <div class="col__num">01</div>
+        <div class="col__title">Sleep Out</div>
+        <div class="col__text">One night · November 19<br><br>Register, get your personal fundraising page, and join us on the field.</div>
+        <div class="col__req">Must raise $250 to participate</div>
+      </div>
+      <div class="col">
+        <div class="col__num">02</div>
+        <div class="col__title">Donate</div>
+        <div class="col__text">Two minutes<br><br>Give to a colleague's page or the Accenture team total. Every gift moves the number and unlocks matching.</div>
+      </div>
+      <div class="col">
+        <div class="col__num">03</div>
+        <div class="col__title">Help fundraise</div>
+        <div class="col__text">A few shares<br><br>You don't have to sleep outside to move the total. Ready-made emails and posts are on the site.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 6: What to expect ────────────────────────── -->
+  <section class="slide" data-slide="5">
+    <div class="eyebrow"><span class="dot"></span>What to expect</div>
+    <div class="statement">How it goes.</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">Evening</div>
+        <div><div class="tl-title">Arrive and check in</div><div class="tl-text">Meet the Accenture group, find your spot on the field, settle in.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">Before lights out</div>
+        <div><div class="tl-title">Hear from the people doing the work</div><div class="tl-text">We hear from Covenant House leaders and from people who have been through the program themselves. Their stories are the part of the night participants remember most.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">Overnight</div>
+        <div><div class="tl-title">Sleep out</div><div class="tl-text">Outside, in a sleeping bag, on a hard surface, alongside your colleagues.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">The next day</div>
+        <div><div class="tl-title">Carry it into your day</div><div class="tl-text">An early finish, then you carry your full day of work and responsibilities on very little sleep — a small glimpse of what some young people face without the support Covenant House provides.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 7: The goal ───────────────────────────────── -->
+  <section class="slide slide--goal" data-slide="6">
+    <div class="eyebrow"><span class="dot"></span>Accenture team goal</div>
+    <div class="goal-figure">$300,000</div>
+    <div class="goal-label">to raise by end of 2026 · First milestone: $100,000 by October</div>
+    <div class="rule"></div>
+    <p class="body-text" style="margin-top:0">
+      Accenture has pledged $100,000 to Covenant House nationally.
+    </p>
+    <div class="links-row">
+      <a class="link-chip link-chip--primary" href="https://mygivingaccenture.yourcause.com/home#/newvolunteer/event/1448907" target="_blank">Register to Sleep Out ↗</a>
+      <a class="link-chip link-chip--ghost" href="https://mygivingaccenture.yourcause.com/home#/fundraising/36107" target="_blank">Donate ↗</a>
+    </div>
+    <p class="link-note">myGiving · Accenture internal portal</p>
+  </section>
+
+  <!-- ─── Slide 8: Join us ─────────────────────────────────── -->
+  <section class="slide slide--center" data-slide="7">
+    <div class="eyebrow" style="justify-content:center"><span class="dot"></span>Sleep Out 2026</div>
+    <div class="closer-headline">
+      Give up one night.<br><em>Change what comes next.</em>
+    </div>
+    <p class="sub" style="margin-top:1.8rem">
+      November 19, 2026 · Soldier Field, Chicago · and Accenture sites nationwide
+    </p>
+    <div class="links-row" style="margin-top:2.4rem; justify-content:center">
+      <a class="link-chip link-chip--primary" href="https://mygivingaccenture.yourcause.com/home#/newvolunteer/event/1448907" target="_blank">Join the Sleep Out ↗</a>
+      <a class="link-chip link-chip--ghost" href="https://mygivingaccenture.yourcause.com/home#/fundraising/36107" target="_blank">Donate ↗</a>
+      <a class="link-chip link-chip--ghost" href="https://log4948.github.io/sleep-out-2026/" target="_blank">Campaign site ↗</a>
+    </div>
+
+    <svg class="skyline" viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <polygon fill="white" points="0,180 0,150 40,150 40,120 80,120 80,155 120,155 120,100 155,100 155,85 195,85 195,125 225,125 225,70 260,70 260,50 275,50 275,15 282,15 282,50 290,50 290,35 330,35 330,50 338,50 338,15 345,15 345,50 360,50 360,110 395,110 395,145 430,145 430,95 465,95 465,125 500,125 500,75 535,75 535,40 550,40 550,5 557,5 557,40 565,40 565,25 605,25 605,40 613,40 613,5 620,5 620,40 635,40 635,110 670,110 670,140 705,140 705,90 740,90 740,120 775,120 775,75 810,75 810,100 845,100 845,55 865,55 865,20 871,20 871,55 885,55 885,20 891,20 891,55 910,55 910,110 945,110 945,145 980,145 980,100 1015,100 1015,130 1050,130 1050,80 1085,80 1085,115 1120,115 1120,150 1155,150 1155,105 1190,105 1190,140 1225,140 1225,90 1260,90 1260,125 1295,125 1295,160 1330,160 1330,115 1365,115 1365,145 1405,145 1405,165 1440,165 1440,180"/>
+    </svg>
+  </section>
+
+</div><!-- /deck -->
+
+<!-- ── Nav chrome ──────────────────────────────────────────── -->
+<nav class="nav-bar" aria-label="Slide navigation">
+  <button class="nav-btn" id="btnPrev" aria-label="Previous slide" disabled>←</button>
+  <div class="nav-dots" id="dots" role="tablist"></div>
+  <button class="nav-btn" id="btnNext" aria-label="Next slide">→</button>
+</nav>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const counter = document.getElementById('counter');
+  let current = 0;
+  const total = slides.length;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'nav-dot' + (i === 0 ? ' is-active' : '');
+    d.setAttribute('role', 'tab');
+    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+    d.onclick = () => goTo(i);
+    dots.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('is-active');
+    dots.children[current].classList.remove('is-active');
+    current = Math.max(0, Math.min(total - 1, n));
+    slides[current].classList.add('is-active');
+    dots.children[current].classList.add('is-active');
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === total - 1;
+    counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  function go(dir) { goTo(current + dir); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); go(-1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End')  goTo(total - 1);
+  });
+
+  // Button wiring (inline onclick can't reach functions inside an IIFE)
+  btnPrev.addEventListener('click', () => go(-1));
+  btnNext.addEventListener('click', () => go(1));
+
+  // Fullscreen button
+  document.querySelector('.fullscreen-btn').addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  // Click anywhere on slide to advance (except links and nav)
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('a, button, .nav-bar')) return;
+    go(1);
+  });
+
+  // Init
+  goTo(0);
+})();
+
+</script>
+</body>
+</html>

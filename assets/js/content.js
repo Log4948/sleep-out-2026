@@ -37,8 +37,7 @@ const CAMPAIGN = {
       label: 'This year we sleep out at',
       place: 'Soldier Field',
       tagline: 'Home of the Chicago Bears',
-      date: 'Thursday, November 19, 2026',
-      note: 'and Accenture sites nationwide'
+      date: 'Thursday, November 19, 2026'
     },
     goalValue: 100000,
     goalLabel: 'Chicago team goal',

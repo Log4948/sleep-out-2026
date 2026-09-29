@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 2026-09-28
+
+- Created `deck.html`, a self-contained single-file HTML slide deck (8 slides) matching the campaign visual style — dark night theme, Accenture purple, Chicago blue, Soldier Field skyline — for use in meetings; navigates via arrow keys, spacebar, or click, with dot indicators and a fullscreen toggle
+- Also pushed the main site to GitHub Pages at https://log4948.github.io/sleep-out-2026/ and initialized the project as a git repository
+
 ## 2026-09-27 (later)
 
 - Removed the three pillars (Solidarity, Awareness, Funding) from the "Why we sleep out" section in `assets/js/content.js` — they were restating the body copy rather than adding new information
