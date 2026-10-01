@@ -89,7 +89,7 @@ const CAMPAIGN = {
     label: 'Weekly call',
     title: 'Join our Friday check-in',
     detail: 'Every Friday · Teams call open to all',
-    cta: { label: 'Join on Teams', href: 'FRIDAY_CALL' }
+    cta: { label: 'Add to calendar', href: 'FRIDAY_CALL' }
   },
 
   /* ---------------------------------------------------------------
@@ -279,7 +279,7 @@ const CAMPAIGN = {
      --------------------------------------------------------------- */
   links: {
     KICKOFF_INVITE: '#',
-    FRIDAY_CALL: 'https://teams.microsoft.com/meet/229358994349343?p=j57VKCqAYzs8QZUbsK',
+    FRIDAY_CALL: 'friday-call.ics',
     REGISTRATION:
       'https://mygivingaccenture.yourcause.com/home#/newvolunteer/event/1448907',
     DONATE:
