@@ -73,6 +73,26 @@ const CAMPAIGN = {
   ],
 
   /* ---------------------------------------------------------------
+     EVENTS — time-sensitive, shown after the orientation strip
+     --------------------------------------------------------------- */
+  events: [
+    {
+      label: 'Join us first',
+      title: 'Sleep Out Kick Off',
+      host: 'Hosted by CHIL',
+      detail: 'Tuesday, October 13 · 5:00 – 8:00 PM',
+      location: 'Guinness Open Gate Brewery · 901 W Kinzie St, Chicago'
+    }
+  ],
+
+  fridayCall: {
+    label: 'Weekly call',
+    title: 'Join our Friday check-in',
+    detail: 'Every Friday · Teams call open to all',
+    cta: { label: 'Join on Teams', href: 'FRIDAY_CALL' }
+  },
+
+  /* ---------------------------------------------------------------
      FUNDRAISING
      There is no longer a goal section on the page: the $300,000 goal,
      its first milestone and the live total all render in the hero, and
@@ -258,6 +278,8 @@ const CAMPAIGN = {
      LINKS — referenced elsewhere by name, e.g. 'REGISTRATION'
      --------------------------------------------------------------- */
   links: {
+    KICKOFF_INVITE: '#',
+    FRIDAY_CALL: 'https://teams.microsoft.com/meet/229358994349343?p=j57VKCqAYzs8QZUbsK',
     REGISTRATION:
       'https://mygivingaccenture.yourcause.com/home#/newvolunteer/event/1448907',
     DONATE:

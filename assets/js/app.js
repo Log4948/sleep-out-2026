@@ -151,6 +151,42 @@
   }
 
   /* ---------------------------------------------------------------
+     EVENTS
+     --------------------------------------------------------------- */
+  function renderEvents() {
+    const el = byId('heroSticker');
+    if (!el || !C.events || !C.events.length) return;
+    const ev = C.events[0];
+    el.innerHTML = `
+      <span class="sticker__tag">${esc(ev.label)}</span>
+      <strong class="sticker__title">${esc(ev.title)}</strong>
+      <span class="sticker__host">${esc(ev.host)}</span>
+      <span class="sticker__detail">${esc(ev.detail)}</span>
+      <span class="sticker__location">${esc(ev.location)}</span>
+      ${ev.cta && ev.cta.href !== '#' ? `<a class="sticker__cta" data-link="${esc(ev.cta.href)}" href="#">${esc(ev.cta.label)} →</a>` : ''}
+    `;
+  }
+
+  /* ---------------------------------------------------------------
+     FRIDAY CALL BANNER
+     --------------------------------------------------------------- */
+  function renderFridayCall() {
+    const el = byId('fridayBar');
+    if (!el || !C.fridayCall) return;
+    const fc = C.fridayCall;
+    el.innerHTML = `
+      <div class="friday-bar__inner">
+        <span class="friday-bar__label">${esc(fc.label)}</span>
+        <span class="friday-bar__title">${esc(fc.title)}</span>
+        <span class="friday-bar__detail">${esc(fc.detail)}</span>
+        <a class="friday-bar__cta" data-link="${esc(fc.cta.href)}" href="#">
+          ${esc(fc.cta.label)}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>`;
+  }
+
+  /* ---------------------------------------------------------------
      ORIENTATION
      --------------------------------------------------------------- */
   function renderOrientation() {
@@ -702,7 +738,9 @@
       : document.title;
 
     renderHero();
+    renderEvents();
     renderOrientation();
+    renderFridayCall();
     renderWhy();
     renderPathways();
     renderExpect();
