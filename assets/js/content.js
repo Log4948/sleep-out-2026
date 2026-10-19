@@ -75,15 +75,7 @@ const CAMPAIGN = {
   /* ---------------------------------------------------------------
      EVENTS — time-sensitive, shown after the orientation strip
      --------------------------------------------------------------- */
-  events: [
-    {
-      label: 'Join us first',
-      title: 'Sleep Out Kick Off',
-      host: 'Hosted by CHIL',
-      detail: 'Tuesday, October 13 · 5:00 – 8:00 PM',
-      location: 'Guinness Open Gate Brewery · 901 W Kinzie St, Chicago'
-    }
-  ],
+  events: [],
 
   fridayCall: {
     label: 'Weekly call',
